@@ -17,30 +17,28 @@ async function main(args) {
 			id: JSON.parse(args[0]),
 		},
 		include: {
-			posts: true,
+			sessions: true,
 		},
 	});
 }
 
-/**
- * @type {import('../../typings').LegacyCommand}
- */
 module.exports = {
 	name: "show",
 
 	execute(message, args) {
-		main(args)
-			.then(() => {
-				console.log(user);
-				message.channel.send({
-					content: `Name: ${JSON.stringify(user)}`,
+		if (!isNaN(args)) {
+			main(args)
+				.then(() => {
+					message.channel.send({
+						content: `Name: ${JSON.stringify(user)}`,
+					});
+				})
+				.catch((e) => {
+					throw e;
+				})
+				.finally(async () => {
+					await prisma.$disconnect();
 				});
-			})
-			.catch((e) => {
-				throw e;
-			})
-			.finally(async () => {
-				await prisma.$disconnect();
-			});
+		}
 	},
 };

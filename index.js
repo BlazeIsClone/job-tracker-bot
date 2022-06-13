@@ -12,9 +12,6 @@ const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
 const { token, client_id, test_guild_id } = require("./config.json");
 
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-
 /**
  * From v13, specifying the intents is compulsory.
  * @type {import('./typings').Client}
@@ -71,18 +68,15 @@ client.triggers = new Collection();
  * @description All command categories aka folders.
  */
 
-const commandFolders = fs.readdirSync("./src/commands");
-
 // Loop through all files and store commands in commands collection.
 
-for (const folder of commandFolders) {
-	const commandFiles = fs
-		.readdirSync(`./src/commands/${folder}`)
-		.filter((file) => file.endsWith(".js"));
-	for (const file of commandFiles) {
-		const command = require(`./src/commands/${folder}/${file}`);
-		client.commands.set(command.name, command);
-	}
+const commandFiles = fs
+	.readdirSync(`./src/commands`)
+	.filter((file) => file.endsWith(".js"));
+
+for (const file of commandFiles) {
+	const command = require(`./src/commands/${file}`);
+	client.commands.set(command.name, command);
 }
 
 /**********************************************************************/

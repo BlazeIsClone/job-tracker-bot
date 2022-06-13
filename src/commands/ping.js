@@ -5,9 +5,6 @@
  * @version 3.2.2
  */
 
-/**
- * @type {import('../../typings').LegacyCommand}
- */
 module.exports = {
 	name: "ping",
 	// Refer to typings.d.ts for available properties.

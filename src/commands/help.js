@@ -6,14 +6,11 @@
  */
 
 // Deconstructing prefix from config file to use in help command
-const { prefix } = require("./../../../config.json");
+const { prefix } = require("../../config.json");
 
 // Deconstructing MessageEmbed to create embeds within this command
 const { MessageEmbed } = require("discord.js");
 
-/**
- * @type {import('../../typings').LegacyCommand}
- */
 module.exports = {
 	name: "help",
 	description: "List all commands of bot or info about a specific command.",

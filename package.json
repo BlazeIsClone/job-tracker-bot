@@ -17,6 +17,9 @@
 	"devDependencies": {
 		"prisma": "^3.15.1"
 	},
+	"prisma": {
+		"schema": "src/models/schema.prisma"
+	},
 	"inspect": "kill-port --port 9229 && node --inspect=0.0.0.0:9229 build/startup.js",
 	"start_watch_inspect": "nodemon --delay 80ms --watch build/ build/startup.js --exec 'npm run inspect'"
 }
