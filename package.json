@@ -1,0 +1,22 @@
+{
+	"name": "job-tracker-bot",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"start": "node main",
+		"dev": "nodemon -L main"
+	},
+	"dependencies": {
+		"@discordjs/builders": "^0.15.0",
+		"@discordjs/rest": "^0.5.0",
+		"@prisma/client": "^3.15.1",
+		"discord-api-types": "^0.33.5",
+		"discord.js": "^13.8.0",
+		"moment": "^2.29.3"
+	},
+	"devDependencies": {
+		"prisma": "^3.15.1"
+	},
+	"inspect": "kill-port --port 9229 && node --inspect=0.0.0.0:9229 build/startup.js",
+	"start_watch_inspect": "nodemon --delay 80ms --watch build/ build/startup.js --exec 'npm run inspect'"
+}
