@@ -1,14 +1,27 @@
 const { PrismaClient } = require("@prisma/client");
 const moment = require("moment");
+const momentTZ = require("moment-timezone");
 
 const prisma = new PrismaClient();
 
 let user = null;
 let existingUsers = false;
+let currentSession = null;
 
 async function main(message, args) {
 	let userID = message.author.id;
 	let authorUsername = message.author.username;
+
+	currentSession = await prisma.user.findMany({
+		select: {
+			sessions: {
+				orderBy: {
+					id: "desc",
+				},
+				take: 1,
+			},
+		},
+	});
 
 	existingUsers = await prisma.user.findUnique({
 		where: {
@@ -53,8 +66,12 @@ module.exports = {
 	execute(message, args) {
 		main(message, args)
 			.then(() => {
-				message.author.send({
-					content: `TIME CLOCKED IN: ${moment()}`,
+				message.channel.send({
+					content: `Session Number : ${JSON.stringify(
+						currentSession[0]?.sessions[0]?.id + 1
+					)}\n TIME CLOCKED IN: ${momentTZ
+						.tz(new Date(), "Asia/Colombo")
+						.format("hh:mm:ss")}`,
 				});
 			})
 			.catch((e) => {

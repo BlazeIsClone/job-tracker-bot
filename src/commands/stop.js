@@ -4,10 +4,32 @@ const moment = require("moment");
 const prisma = new PrismaClient();
 
 let user = null;
-let startTime = null;
+let currentSession = null;
 
 async function main(message) {
 	let userID = message.author.id;
+
+	let currentID = await prisma.user.findMany({
+		select: {
+			sessions: {
+				orderBy: {
+					id: "desc",
+				},
+				take: 1,
+			},
+		},
+	});
+
+	currentSession = await prisma.user.findMany({
+		select: {
+			sessions: {
+				orderBy: {
+					id: "desc",
+				},
+				take: 1,
+			},
+		},
+	});
 
 	await prisma.user.update({
 		where: {
@@ -18,18 +40,19 @@ async function main(message) {
 				update: {
 					data: {
 						end: new Date(),
-						totalTime: Math.floor(
-							moment
-								.duration(
-									moment([21, 30, 00], "HH:mm:ss").diff(
-										startTime?.sessions[0].start
+						totalTime: moment
+							.utc(
+								moment(new Date(), "DD/MM/YYYY HH:mm:ss").diff(
+									moment(
+										currentSession[0].sessions[0]?.start,
+										"DD/MM/YYYY HH:mm:ss"
 									)
 								)
-								.asHours()
-						),
+							)
+							.format("HH:mm:ss"),
 					},
 					where: {
-						id: 2,
+						id: currentID[0].sessions[0]?.id,
 					},
 				},
 			},
@@ -44,15 +67,6 @@ async function main(message) {
 			sessions: true,
 		},
 	});
-
-	startTime = await prisma.user.findUnique({
-		where: {
-			id: userID,
-		},
-		include: {
-			sessions: true,
-		},
-	});
 }
 
 module.exports = {
@@ -60,11 +74,23 @@ module.exports = {
 
 	execute(message, args) {
 		main(message, args)
-			.then(() => {
+			.then(async () => {
+				let cacheVar = await prisma.user.findMany({
+					select: {
+						sessions: {
+							orderBy: {
+								id: "desc",
+							},
+							take: 1,
+						},
+					},
+				});
 				message.channel.send({
-					content: `userID : ${JSON.stringify(
-						user.id
-					)}\n name: ${JSON.stringify(user.username)}\n`,
+					content: `Session Number : ${JSON.stringify(
+						currentSession[0].sessions[0]?.id
+					)}\n name: ${JSON.stringify(
+						user.username
+					)}\n TotalTime: ${JSON.stringify(cacheVar[0].sessions[0].totalTime)}`,
 				});
 			})
 			.catch((e) => {
