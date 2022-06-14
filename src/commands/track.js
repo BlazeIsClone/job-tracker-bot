@@ -1,10 +1,3 @@
-/**
- * @file Sample track command
- * @author BlazeClone
- * @since 1.0.0
- * @version 1.0.0
- */
-
 const { PrismaClient } = require("@prisma/client");
 const moment = require("moment");
 

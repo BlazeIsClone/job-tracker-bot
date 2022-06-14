@@ -1,14 +1,5 @@
-/**
- * @file Dynamic help command
- * @author Naman Vrati
- * @since 1.0.0
- * @version 3.2.2
- */
-
-// Deconstructing prefix from config file to use in help command
 const { prefix } = require("../../config.json");
 
-// Deconstructing MessageEmbed to create embeds within this command
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {

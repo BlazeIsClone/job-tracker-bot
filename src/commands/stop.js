@@ -1,10 +1,3 @@
-/**
- * @file Sample stop command
- * @author BlazeClone
- * @since 1.0.0
- * @version 1.0.0
- */
-
 const { PrismaClient } = require("@prisma/client");
 const moment = require("moment");
 
@@ -36,7 +29,7 @@ async function main(message) {
 						),
 					},
 					where: {
-						id: userID,
+						id: 2,
 					},
 				},
 			},
@@ -71,7 +64,7 @@ module.exports = {
 				message.channel.send({
 					content: `userID : ${JSON.stringify(
 						user.id
-					)}\n name: ${JSON.stringify(user.name)}\n`,
+					)}\n name: ${JSON.stringify(user.username)}\n`,
 				});
 			})
 			.catch((e) => {
