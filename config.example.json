@@ -3,5 +3,6 @@
 	"token": "bot-token",
 	"owner": "owner-id",
 	"client_id": "bot-id",
-	"test_guild_id": "server-id"
+	"test_guild_id": "server-id",
+	"theme_color": "#000"
 }

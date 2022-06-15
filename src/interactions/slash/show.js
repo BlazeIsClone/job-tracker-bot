@@ -1,7 +1,15 @@
+const { theme_color } = require("../../../config.json");
 const { MessageEmbed } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { PrismaClient } = require("@prisma/client");
 const momentTZ = require("moment-timezone");
+
+/**
+ * @file Show slash command.
+ * @author BlazeIsClone
+ * @since 2.0.0
+ * @version 1.0.0
+ */
 
 const prisma = new PrismaClient();
 
@@ -46,7 +54,7 @@ module.exports = {
 		let filterArgs = interaction.options.getInteger("filter");
 		let userArgs = interaction.options.getMentionable("user");
 
-		let embed = new MessageEmbed().setColor(0x4286f4);
+		let embed = new MessageEmbed().setColor(theme_color);
 
 		main(interaction, userArgs)
 			.then(() => {
@@ -61,7 +69,7 @@ module.exports = {
 					if (index >= filterArgs) return;
 
 					embed
-						.setColor("#0099ff")
+						.setColor(theme_color)
 						.setTitle(`Session ${sessionID}`)
 						.setDescription(`Name: ${user.username}`)
 						.setThumbnail(user.avatar)

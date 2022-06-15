@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { prefix } = require("../../../config.json");
 
 /**
  * @file Ping slash command.
@@ -10,13 +11,11 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 module.exports = {
 	// The data needed to register slash commands to Discord.
 
-	data: new SlashCommandBuilder()
-		.setName("ping")
-		.setDescription("Pings the server"),
+	data: new SlashCommandBuilder().setName("help").setDescription("Get help"),
 
 	async execute(interaction) {
 		interaction.reply({
-			content: "🏓 PONG!",
+			content: `💊 Use this command to start tracking time: ${prefix}track`,
 			ephemeral: true,
 		});
 	},

@@ -1,9 +1,16 @@
+const { theme_color } = require("../../../config.json");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageActionRow, MessageButton } = require("discord.js");
-
 const { PrismaClient } = require("@prisma/client");
 const { MessageEmbed } = require("discord.js");
 const momentTZ = require("moment-timezone");
+
+/**
+ * @file Track slash command.
+ * @author BlazeIsClone
+ * @since 2.0.0
+ * @version 1.0.0
+ */
 
 const prisma = new PrismaClient();
 
@@ -67,7 +74,7 @@ module.exports = {
 		.setDescription("Create a new session and track time"),
 
 	async execute(interaction) {
-		let embed = new MessageEmbed().setColor(0x4286f4);
+		let embed = new MessageEmbed().setColor(theme_color);
 
 		let component = new MessageActionRow().addComponents(
 			new MessageButton()
@@ -83,9 +90,9 @@ module.exports = {
 					(value) => value.id === interaction.user.id
 				);
 				embed
-					.setColor("#0099ff")
+					.setColor(theme_color)
 					.setTitle(
-						`Session Created: ${JSON.stringify(
+						`▶  Session Created: ${JSON.stringify(
 							sessionCache[0]._count.sessions
 						)}`
 					)
