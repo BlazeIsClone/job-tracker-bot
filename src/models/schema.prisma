@@ -24,5 +24,6 @@ model Session {
 model User {
   id       String    @id @unique
   username String
+  avatar   String?
   sessions Session[]
 }

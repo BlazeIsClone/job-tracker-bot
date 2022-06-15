@@ -91,15 +91,13 @@ const slashCommands = fs.readdirSync("./src/interactions/slash");
 
 // Loop through all files and store slash-commands in slashCommands collection.
 
-for (const module of slashCommands) {
-	const commandFiles = fs
-		.readdirSync(`./src/interactions/slash/${module}`)
-		.filter((file) => file.endsWith(".js"));
+const slashCommandFiles = fs
+	.readdirSync(`./src/interactions/slash`)
+	.filter((file) => file.endsWith(".js"));
 
-	for (const commandFile of commandFiles) {
-		const command = require(`./src/interactions/slash/${module}/${commandFile}`);
-		client.slashCommands.set(command.data.name, command);
-	}
+for (const commandFile of slashCommandFiles) {
+	const command = require(`./src/interactions/slash/${commandFile}`);
+	client.slashCommands.set(command.data.name, command);
 }
 
 /**********************************************************************/

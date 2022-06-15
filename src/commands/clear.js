@@ -1,22 +1,29 @@
 const { PrismaClient } = require("@prisma/client");
-const { owner } = require("../../config.json");
+const { Permissions } = require("discord.js");
 
 const prisma = new PrismaClient();
 
-async function main(message, args) {
-	let userID = message.author.id;
-
+async function main() {
 	await prisma.session.deleteMany({});
 }
 
 module.exports = {
 	name: "clear",
+	description: "Reset session cache",
+	aliases: ["reset"],
+	usage: "[command name]",
+	cooldown: 300,
 
-	execute(message, args) {
-		main(message, args)
+	execute(message) {
+		if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR))
+			return message.channel.send({
+				content: `⚠️ Only Server Administrators can do that!`,
+			});
+
+		main()
 			.then(() => {
 				message.channel.send({
-					content: `Cleared Cache`,
+					content: `🧹 Database Session Cache Cleared`,
 				});
 			})
 			.catch((e) => {
