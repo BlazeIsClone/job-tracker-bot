@@ -1,5 +1,5 @@
 const { theme_color } = require("../../../config.json");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, Message } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { PrismaClient } = require("@prisma/client");
 const momentTZ = require("moment-timezone");
@@ -54,8 +54,6 @@ module.exports = {
 		let filterArgs = interaction.options.getInteger("filter");
 		let userArgs = interaction.options.getMentionable("user");
 
-		let embed = new MessageEmbed().setColor(theme_color);
-
 		main(interaction, userArgs)
 			.then(() => {
 				if (user?.sessions == null)
@@ -68,7 +66,7 @@ module.exports = {
 				user.sessions.map(({ id: sessionID, start, end, totalTime }, index) => {
 					if (index >= filterArgs) return;
 
-					embed
+					let embed = new MessageEmbed()
 						.setColor(theme_color)
 						.setTitle(`Session ${sessionID}`)
 						.setDescription(`Name: ${user.username}`)

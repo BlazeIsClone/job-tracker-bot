@@ -60,7 +60,7 @@ async function main(interaction) {
 				update: {
 					data: {
 						end:
-							currentSession[0].sessions[0].end != null
+							currentSession[0].sessions[0]?.end != null
 								? undefined
 								: new Date(),
 						totalTime: moment
