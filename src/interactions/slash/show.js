@@ -74,12 +74,17 @@ module.exports = {
 						.addFields(
 							{
 								name: "Start Time",
-								value: momentTZ.tz(start, "Asia/Colombo").format("hh:mm:ss"),
+								value: momentTZ
+									.tz(start, "Asia/Colombo")
+									.format("hh:mm:ssA DD/MM/YY "),
 								inline: true,
 							},
 							{
 								name: "End Time",
-								value: momentTZ.tz(end, "Asia/Colombo").format("hh:mm:ss A"),
+								value:
+									momentTZ
+										.tz(end, "Asia/Colombo")
+										.format("hh:mm:ssA DD/MM/YY ") + " Hours",
 								inline: true,
 							},
 							{
@@ -90,7 +95,7 @@ module.exports = {
 						)
 						.addFields({
 							name: "Session Duration",
-							value: String(totalTime),
+							value: `${String(totalTime)} Hours`,
 						});
 
 					interaction.channel.send({

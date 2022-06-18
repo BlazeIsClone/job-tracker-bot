@@ -135,14 +135,22 @@ module.exports = {
 					.setThumbnail(user.avatar)
 					.addFields(
 						{
-							name: "Time Ended",
+							name: "Started",
 							value: momentTZ
-								.tz(new Date(), "Asia/Colombo")
-								.format("hh:mm:ss A"),
+								.tz(cacheVar[0].sessions[0].start, "Asia/Colombo")
+								.format("hh:mm:ssA DD/MM/YY"),
+							inline: true,
 						},
 						{
-							name: "Total Time",
-							value: String(cacheVar[0].sessions[0].totalTime),
+							name: "Ended",
+							value: momentTZ
+								.tz(cacheVar[0].sessions[0].end || new Date(), "Asia/Colombo")
+								.format("hh:mm:ssA DD/MM/YY "),
+							inline: true,
+						},
+						{
+							name: "Tracked Time",
+							value: `${String(cacheVar[0].sessions[0].totalTime)} Hours`,
 						}
 					);
 
