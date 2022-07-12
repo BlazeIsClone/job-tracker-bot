@@ -43,6 +43,10 @@ Start the container
 npm run container:up
 ```
 
+<hr/>
+
+## Actions
+
 Run Database Migrations
 
 ```bash
