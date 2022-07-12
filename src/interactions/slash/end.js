@@ -75,7 +75,7 @@ async function main(interaction) {
 									)
 								)
 							)
-							.format("HH:mm:ss"),
+							.format("HH:mm"),
 					},
 					where: {
 						id: currentID[0].sessions[0]?.id,
@@ -138,14 +138,14 @@ module.exports = {
 							name: "Started",
 							value: momentTZ
 								.tz(cacheVar[0].sessions[0].start, "Asia/Colombo")
-								.format("hh:mm:ssA DD/MM/YY"),
+								.format("hh:mm A DD/MM/YY"),
 							inline: true,
 						},
 						{
 							name: "Ended",
 							value: momentTZ
 								.tz(cacheVar[0].sessions[0].end || new Date(), "Asia/Colombo")
-								.format("hh:mm:ssA DD/MM/YY "),
+								.format("hh:mm A DD/MM/YY "),
 							inline: true,
 						},
 						{

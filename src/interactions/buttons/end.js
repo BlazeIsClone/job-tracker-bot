@@ -71,11 +71,11 @@ let main = async (interaction) => {
 								).diff(
 									moment(
 										currentSession[0].sessions[0]?.start,
-										"DD/MM/YYYY HH:mm:ss"
+										"DD/MM/YYYY HH:mm"
 									)
 								)
 							)
-							.format("HH:mm:ss"),
+							.format("HH:mm"),
 					},
 					where: {
 						id: currentID[0].sessions[0]?.id,
@@ -132,9 +132,7 @@ module.exports = {
 					.addFields(
 						{
 							name: "Time Ended",
-							value: momentTZ
-								.tz(new Date(), "Asia/Colombo")
-								.format("hh:mm:ss A"),
+							value: momentTZ.tz(new Date(), "Asia/Colombo").format("hh:mm A"),
 						},
 						{
 							name: "Total Time",

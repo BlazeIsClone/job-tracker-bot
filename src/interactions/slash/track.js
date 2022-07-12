@@ -99,7 +99,7 @@ module.exports = {
 					.setThumbnail(user.avatar)
 					.addFields({
 						name: "Time Created",
-						value: momentTZ.tz(new Date(), "Asia/Colombo").format("hh:mm:ss A"),
+						value: momentTZ.tz(new Date(), "Asia/Colombo").format("hh:mm A"),
 					});
 
 				interaction.reply({

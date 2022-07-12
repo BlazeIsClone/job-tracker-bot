@@ -76,15 +76,14 @@ module.exports = {
 								name: "Start Time",
 								value: momentTZ
 									.tz(start, "Asia/Colombo")
-									.format("hh:mm:ssA DD/MM/YY "),
+									.format("hh:mm A DD/MM/YY "),
 								inline: true,
 							},
 							{
 								name: "End Time",
 								value:
-									momentTZ
-										.tz(end, "Asia/Colombo")
-										.format("hh:mm:ssA DD/MM/YY ") + " Hours",
+									momentTZ.tz(end, "Asia/Colombo").format("hh:mm A DD/MM/YY ") +
+									" Hours",
 								inline: true,
 							},
 							{
