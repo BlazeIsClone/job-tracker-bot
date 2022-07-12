@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: discord
+    container_name: job-tracker-bot
     depends_on:
       - postgres
     volumes:

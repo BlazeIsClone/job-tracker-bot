@@ -74,9 +74,11 @@ module.exports = {
 							},
 							{
 								name: "End Time",
-								value:
-									momentTZ.tz(end, "Asia/Colombo").format("hh:mm A DD/MM/YY ") +
-									" Hours",
+								value: end
+									? momentTZ
+											.tz(end, "Asia/Colombo")
+											.format("hh:mm A DD/MM/YY") + " Hours"
+									: "Session Not Ended",
 								inline: true,
 							},
 							{
@@ -87,12 +89,13 @@ module.exports = {
 						)
 						.addFields({
 							name: "Session Duration",
-							value: `${String(totalTime)} Hours`,
+							value: totalTime
+								? String(totalTime) + " Hours"
+								: "Session Not Ended",
 						});
 
-					interaction.channel.send({
+					interaction.member.send({
 						embeds: [embed],
-						ephemeral: true,
 					});
 				});
 			})

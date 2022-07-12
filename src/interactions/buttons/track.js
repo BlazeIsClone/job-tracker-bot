@@ -1,17 +1,14 @@
 const { theme_color } = require("../../../config.json");
-const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageActionRow, MessageButton } = require("discord.js");
 const { PrismaClient } = require("@prisma/client");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, MessageActionRow, MessageButton } = require("discord.js");
 const momentTZ = require("moment-timezone");
 
 const prisma = new PrismaClient();
 
 let user = null;
-let existingUsers = false;
-let sessionCount = null;
+let currentSession = null;
 
-async function main(interaction) {
+let main = async (interaction) => {
 	let userID = interaction.user.id;
 	let authorUsername = interaction.user.username;
 
@@ -57,48 +54,63 @@ async function main(interaction) {
 			_count: { select: { sessions: true } },
 		},
 	});
-}
+
+	user = await prisma.user.findUnique({
+		where: {
+			id: userID,
+		},
+		include: {
+			sessions: true,
+		},
+	});
+
+	currentSession = await prisma.user.findMany({
+		where: {
+			id: userID,
+		},
+		select: {
+			sessions: {
+				orderBy: {
+					id: "desc",
+				},
+				take: 1,
+			},
+		},
+	});
+};
 
 module.exports = {
-	// The data needed to register slash commands to Discord.
-
-	data: new SlashCommandBuilder()
-		.setName("track")
-		.setDescription("Create a new session and track time"),
+	id: "track",
 
 	async execute(interaction) {
 		let embed = new MessageEmbed().setColor(theme_color);
 
-		let component = new MessageActionRow().addComponents(
-			new MessageButton()
-				.setCustomId("end")
-				.setLabel("End Session")
-				.setStyle("DANGER")
-				.setEmoji("⏹️")
-		);
-
 		main(interaction)
-			.then(() => {
+			.then(async () => {
 				let sessionCache = sessionCount.filter(
 					(value) => value.id === interaction.user.id
 				);
+
 				embed
 					.setColor(theme_color)
-					.setTitle(
-						`▶  Session Created: ${JSON.stringify(
-							sessionCache[0]._count.sessions
-						)}`
-					)
-					.setThumbnail(user.avatar)
+					.setTitle(`▶  Session Created: ${sessionCache[0]._count.sessions}`)
+					.setThumbnail(user?.avatar)
 					.addFields({
 						name: "Time Created",
 						value: momentTZ.tz(new Date(), "Asia/Colombo").format("hh:mm A"),
 					});
 
-				interaction.reply({
+				let endBtn = new MessageActionRow().addComponents(
+					new MessageButton()
+						.setCustomId("end")
+						.setLabel("End Session")
+						.setStyle("DANGER")
+						.setEmoji("⏹️")
+				);
+
+				interaction.member.send({
 					embeds: [embed],
-					components: [component],
-					ephemeral: true,
+					components: [endBtn],
 				});
 			})
 			.catch((e) => {

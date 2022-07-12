@@ -4,7 +4,12 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node main",
-		"dev": "nodemon -L main"
+		"dev": "nodemon -L main",
+		"migrate": "docker exec job-tracker-bot npx prisma migrate dev",
+		"migrate:fresh": "docker exec job-tracker-bot npx prisma migrate reset --force && npm run migrate",
+		"container:up": "docker-compose up -d",
+		"container:down": "docker-compose up -d",
+		"container:reset": "docker-compose down -v"
 	},
 	"dependencies": {
 		"@discordjs/builders": "^0.15.0",
