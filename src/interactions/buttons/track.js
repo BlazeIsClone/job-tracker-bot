@@ -29,7 +29,21 @@ let main = async (interaction) => {
 		});
 	}
 
-	if (existingUsers) {
+	currentSession = await prisma.user.findMany({
+		where: {
+			id: userID,
+		},
+		select: {
+			sessions: {
+				orderBy: {
+					id: "desc",
+				},
+				take: 1,
+			},
+		},
+	});
+
+	if (existingUsers && currentSession[0]?.sessions[0]?.end) {
 		await prisma.user.update({
 			where: {
 				id: userID,
@@ -61,20 +75,6 @@ let main = async (interaction) => {
 		},
 		include: {
 			sessions: true,
-		},
-	});
-
-	currentSession = await prisma.user.findMany({
-		where: {
-			id: userID,
-		},
-		select: {
-			sessions: {
-				orderBy: {
-					id: "desc",
-				},
-				take: 1,
-			},
 		},
 	});
 };

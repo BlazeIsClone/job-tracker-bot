@@ -135,7 +135,6 @@ module.exports = {
 
 				interaction.reply({
 					embeds: [embed],
-					ephemeral: true,
 				});
 			})
 			.catch((e) => {

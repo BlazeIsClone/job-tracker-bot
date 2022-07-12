@@ -1,10 +1,19 @@
-const { PrismaClient } = require("@prisma/client");
 const { Permissions } = require("discord.js");
+const { exec } = require("child_process");
 
-const prisma = new PrismaClient();
+let printErr, printStdout, printStderr;
 
 let main = async () => {
-	await prisma.session.deleteMany({});
+	exec(
+		"npx prisma migrate reset --force && npx prisma migrate dev",
+		(error, stdout, stderr) => {
+			if (error) {
+				error = printErr;
+			}
+			printStdout = stdout;
+			printStderr = stderr;
+		}
+	);
 };
 
 module.exports = {
@@ -12,7 +21,7 @@ module.exports = {
 	description: "Reset session cache",
 	aliases: ["reset"],
 	usage: "[command name]",
-	cooldown: 300,
+	cooldown: 100,
 
 	execute(message) {
 		if (!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR))
@@ -23,14 +32,11 @@ module.exports = {
 		main()
 			.then(() => {
 				message.channel.send({
-					content: `🧹 Database Session Cache Cleared`,
+					content: "```bash\n" + "Database Migration Command Executed" + "```",
 				});
 			})
 			.catch((e) => {
 				throw e;
-			})
-			.finally(async () => {
-				await prisma.$disconnect();
 			});
 	},
 };

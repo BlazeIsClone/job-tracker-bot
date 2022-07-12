@@ -46,9 +46,10 @@ module.exports = {
 	async execute(interaction) {
 		let filterArgs = interaction.options.getInteger("filter");
 		let userArgs = interaction.options.getMentionable("user");
+		let embedArr = [];
 
 		main(interaction, userArgs)
-			.then(() => {
+			.then(async () => {
 				if (user?.sessions == null)
 					return interaction.channel.send({
 						content: `⚠️ No previous sessions found for the user ${
@@ -94,9 +95,11 @@ module.exports = {
 								: "Session Not Ended",
 						});
 
-					interaction.member.send({
-						embeds: [embed],
-					});
+					embedArr.push(embed);
+				});
+				await interaction.reply({
+					embeds: embedArr || "⚠️ No previous sessions found for the user",
+					ephemeral: true,
 				});
 			})
 			.catch((e) => {
@@ -105,9 +108,5 @@ module.exports = {
 			.finally(async () => {
 				await prisma.$disconnect();
 			});
-
-		await interaction.reply({
-			content: `📁 Showing filtered results`,
-		});
 	},
 };

@@ -61,7 +61,7 @@ module.exports = {
 						value: [Math.floor(sum.asHours()), sum.minutes()].join(":"),
 					});
 
-				interaction.channel.send({
+				interaction.reply({
 					embeds: [embed],
 					ephemeral: true,
 				});
