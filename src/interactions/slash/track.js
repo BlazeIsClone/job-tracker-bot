@@ -5,13 +5,6 @@ const { PrismaClient } = require("@prisma/client");
 const { MessageEmbed } = require("discord.js");
 const momentTZ = require("moment-timezone");
 
-/**
- * @file Track slash command.
- * @author BlazeIsClone
- * @since 2.0.0
- * @version 1.0.0
- */
-
 const prisma = new PrismaClient();
 
 let user = null;

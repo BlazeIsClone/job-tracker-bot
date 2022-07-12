@@ -1,10 +1,3 @@
-/**
- * @file End Button event.
- * @author BlazeIsClone
- * @since 2.0.0
- * @version 1.0.0
- */
-
 const { theme_color } = require("../../../config.json");
 const { PrismaClient } = require("@prisma/client");
 const { MessageEmbed } = require("discord.js");

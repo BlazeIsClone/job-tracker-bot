@@ -1,12 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
-/**
- * @file Ping slash command.
- * @author BlazeIsClone
- * @since 2.0.0
- * @version 1.0.0
- */
-
 module.exports = {
 	// The data needed to register slash commands to Discord.
 

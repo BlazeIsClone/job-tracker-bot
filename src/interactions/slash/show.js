@@ -4,13 +4,6 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { PrismaClient } = require("@prisma/client");
 const momentTZ = require("moment-timezone");
 
-/**
- * @file Show slash command.
- * @author BlazeIsClone
- * @since 2.0.0
- * @version 1.0.0
- */
-
 const prisma = new PrismaClient();
 
 let user = null;

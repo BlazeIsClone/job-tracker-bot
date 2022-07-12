@@ -1,13 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const { Permissions } = require("discord.js");
 
-/**
- * @file Clear command.
- * @author BlazeIsClone
- * @since 2.0.0
- * @version 3.2.2
- */
-
 const prisma = new PrismaClient();
 
 let main = async () => {
