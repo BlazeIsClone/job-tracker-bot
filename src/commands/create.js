@@ -25,13 +25,23 @@ module.exports = {
 			.setTitle("👮‍♂️ Job Tracker")
 			.setDescription("Create a new session and start tracking time");
 
-		let component = new MessageActionRow().addComponents(
+		let component = new MessageActionRow().addComponents([
 			new MessageButton()
 				.setCustomId("track")
 				.setLabel("Start Tracking")
 				.setStyle("PRIMARY")
-				.setEmoji("▶️")
-		);
+				.setEmoji("▶️"),
+			new MessageButton()
+				.setCustomId("total")
+				.setLabel("Total Time")
+				.setStyle("SECONDARY")
+				.setEmoji("⏲️"),
+			new MessageButton()
+				.setCustomId("show")
+				.setLabel("Session History")
+				.setStyle("SUCCESS")
+				.setEmoji("📈"),
+		]);
 
 		message.channel
 			.send({

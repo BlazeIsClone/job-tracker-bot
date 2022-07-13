@@ -6,7 +6,6 @@ const moment = require("moment");
 
 const prisma = new PrismaClient();
 
-let user = null;
 let sessionCount = null;
 let cacheVar = null;
 
@@ -78,15 +77,6 @@ let main = async (interaction) => {
 		},
 	});
 
-	user = await prisma.user.findUnique({
-		where: {
-			id: userID,
-		},
-		include: {
-			sessions: true,
-		},
-	});
-
 	cacheVar = await prisma.user.findMany({
 		where: {
 			id: interaction.user.id,
@@ -121,7 +111,6 @@ module.exports = {
 							sessionCache[0]._count.sessions
 						)}`
 					)
-					.setThumbnail(user.avatar)
 					.addFields(
 						{
 							name: "Time Ended",

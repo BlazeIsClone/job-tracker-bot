@@ -5,7 +5,6 @@ const momentTZ = require("moment-timezone");
 
 const prisma = new PrismaClient();
 
-let user = null;
 let currentSession = null;
 
 let main = async (interaction) => {
@@ -54,27 +53,9 @@ let main = async (interaction) => {
 		});
 	}
 
-	user = await prisma.user.findUnique({
-		where: {
-			id: userID,
-		},
-		include: {
-			sessions: true,
-		},
-	});
-
 	sessionCount = await prisma.user.findMany({
 		include: {
 			_count: { select: { sessions: true } },
-		},
-	});
-
-	user = await prisma.user.findUnique({
-		where: {
-			id: userID,
-		},
-		include: {
-			sessions: true,
 		},
 	});
 };
@@ -94,7 +75,6 @@ module.exports = {
 				embed
 					.setColor(theme_color)
 					.setTitle(`▶  Session Created: ${sessionCache[0]._count.sessions}`)
-					.setThumbnail(user?.avatar)
 					.addFields({
 						name: "Time Created",
 						value: momentTZ.tz(new Date(), "Asia/Colombo").format("hh:mm A"),
